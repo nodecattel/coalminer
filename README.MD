@@ -2,24 +2,17 @@
 
 This code is experimental and provided "as is", without warranty of any kind. Use it at your own risk. It's under development, and its features may change. Always back up your data before use. Contributions and feedback are welcome.
 
-The script automates the setup and running of the Ore CLI for $ORE mining operations on Soylana Manlet, ensuring you're always running the latest version and simplifying the mining setup process.
+The script automates the setup and running of the Coal CLI for $COAL mining operations on Soylana Manlet, ensuring you're always running the latest version and simplifying the mining setup process.
 
-ORE program address `oreV2ZymfyeXgNgBdqMkumTqqAprVqgBWQfoYkrtKWQ`
 
-$ORE (V2) token address `oreoU2P8bN6jkk3jbaiVxYnG1dCXcYxwhwyK9jSybcp`
-
-$ORE (V1) token address `oreoN2tQbHXVaZsr3pf66A48miqcBXCDJozganhEJgz` - mining paused, migrate to v2 if you have
-
-## Oreminer script cli interface sample 
-
-![ORE Miner Interface Sample](https://github.com/nodecattel/oreminer/blob/51a8793be37bc72f683ffd24bf8ec9e8ba79f510/oreminer-interface-sample.png)
+$COAL (V2) token address `E3yUqBNTZxV8ELvW99oRLC7z4ddbJqqR4NphwrMug9zu`
 
 ## Quick Start 🛠️
 
 To get started with the Ore Miner Auto Script, clone this repository to your local machine using the following command:
 
 ```bash
-git clone https://github.com/nodecattel/oreminer.git
+git clone https://github.com/nodecattel/coalminer.git
 cd oreminer
 ```
 
@@ -33,7 +26,7 @@ Before running the script, ensure you have the following installed:
 ### Give permission for script become executable
 
 ```bash
-chmod +x install.sh ore.sh upgrade.sh
+chmod +x install.sh coal.sh upgrade.sh
 ```
 ### Installation 💻
 
@@ -42,18 +35,18 @@ Navigate to the cloned repository directory and run the `install.sh` script to s
 ```bash
 ./install.sh
 ```
-We have added few options for installation which has `mainnet (official ore-cli)`, `jito dynamic tip (dannpl fork)` and `panda optimized cores (JustPandaEver fork)`
+We have added few options for installation which has `mainnet (official coal-cli)`and `panda optimized cores (JustPandaEver fork)`
 
 Follow the on-screen instructions to complete the installation. The script will:
 
 - Install Rust and Cargo
 - Install the Solana CLI
 - Create New Wallet if not exist : !!! note down your SEED PHRASE !!!
-- Install and update the Ore CLI to the latest version
-- Set executable permissions for `ore.sh`
-- Optionally run `ore.sh` for further setup
+- Install and update the Coal CLI to the latest version
+- Set executable permissions for `coal.sh`
+- Optionally run `coal.sh` for further setup
 
-### Running Ore Miner ⛏️
+### Running Coal Miner ⛏️
 
 Fund your wallet with some sol
 
@@ -65,29 +58,28 @@ solana address
 After installation, fund your wallet and you can start the mining process by running:
 ### Solo mining with your machine
 ```bash
-./ore.sh mine
+./coal.sh mine
 ```
 
-### Pool mining with Alvarium mine pool
+### Pool mining with Alvarium mine pool - not available yet
 ```bash
-./ore.sh pool
+./coal.sh pool
 ```
 See all available commands
 
 ```
-./ore.sh
+./coal.sh
 ```
 
-Upgrade ORE-CLI version
+Upgrade COAL-CLI version
 ```
 ./upgrade.sh
 ```
 
-### ORECULATOR Setup & Usage 🧮
-Here’s a snapshot of the ORECULATOR in action:
+### COALCULATOR Setup & Usage 🧮
+Here’s a snapshot of the COALCULATOR in action:
 
-![ORECULATOR Snapshot](https://github.com/nodecattel/oreminer/blob/4773cbad9900e0a60fa7299cda5483df7012ce66/oreculator-sample.png)
-
+![ORECULATOR Snapshot]
 To install the required packages for cal.py:
 
 ```bash
@@ -95,7 +87,7 @@ sudo apt install python3-pip &&
 pip install -r requirements.txt
 ```
 
-Then, run the ORECULATOR with:
+Then, run the COALCULATOR with:
 
 ```bash
 ./cal.py
@@ -103,10 +95,10 @@ Then, run the ORECULATOR with:
 
 ### Change default variable config manually
 
-To change your setting please set up in `ore.conf` located at `$HOME/.ore`
+To change your setting please set up in `coal.conf` located at `$HOME/.coal`
 ```bash
-cd $HOME/.ore
-nano ore.conf
+cd $HOME/.coal
+nano coal.conf
 ```
 ### Export Private key to external wallet
 ```bash
@@ -116,33 +108,22 @@ Then copy the output to your external wallet like Phantom, Backpack
 
 ### Useful Links
 
-Ore Cli's creates
+Coal Cli's creates
 
 ```
-https://crates.io/crates/ore-cli
+https://crates.io/crates/coal-cli
 ```
 
-Official Ore-Cli repository
+Official Coal-Cli repository
 
 ```
-https://github.com/regolith-labs/ore-cli
-```
-Dune $ORE PoW Mining on Soylana Manlet
-
-```
-https://dune.com/thetonton/ore-mine-event-analysis
+https://github.com/coal-digital/coal-cli
 ```
 
-Alverium mine pool dashboard
+`$COAL` Price chart
 
 ```
-https://alvarium.vercel.app
-```
-
-`$ORE` Price chart
-
-```
-https://birdeye.so/token/oreoU2P8bN6jkk3jbaiVxYnG1dCXcYxwhwyK9jSybcp?chain=solana
+https://github.com/coal-digital/coal-cli
 ```
 
 

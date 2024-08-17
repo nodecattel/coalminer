@@ -5,13 +5,13 @@ import os
 
 def get_keypair_path():
     try:
-        # Try to get the keypair path from ore.conf
-        with open(os.path.expanduser("~/.ore/ore.conf"), "r") as conf_file:
+        # Try to get the keypair path from coal.conf
+        with open(os.path.expanduser("~/.coal/coal.conf"), "r") as conf_file:
             for line in conf_file:
                 if line.startswith("KEYPAIR_PATH="):
                     return line.split("=")[1].strip()
         
-        # If not found in ore.conf, get it from Solana config
+        # If not found in coal.conf, get it from Solana config
         solana_config_output = subprocess.run(
             ['solana', 'config', 'get'],
             capture_output=True, text=True
@@ -28,9 +28,9 @@ def get_stake_and_top_stake():
     try:
         keypair_path = get_keypair_path()
         if keypair_path:
-            # Get user's stake from the 'ore balance' command with the keypair option
+            # Get user's stake from the 'coal balance' command with the keypair option
             balance_output = subprocess.run(
-                ['ore', 'balance', '--keypair', keypair_path], 
+                ['coal', 'balance', '--keypair', keypair_path], 
                 capture_output=True, text=True
             )
             balance_lines = balance_output.stdout.strip().split('\n')
@@ -41,8 +41,8 @@ def get_stake_and_top_stake():
                     stake = float(line.split(":")[1].strip().split()[0])
                     break
 
-            # Get top staker's stake from the 'ore config' command
-            config_output = subprocess.run(['ore', 'config'], capture_output=True, text=True)
+            # Get top staker's stake from the 'coal config' command
+            config_output = subprocess.run(['coal', 'config'], capture_output=True, text=True)
             config_lines = config_output.stdout.strip().split('\n')
 
             top_stake = 0
@@ -53,7 +53,7 @@ def get_stake_and_top_stake():
 
             return stake, top_stake
         else:
-            print("Error: Keypair path not found in ore.conf or Solana config.")
+            print("Error: Keypair path not found in coal.conf or Solana config.")
             return None, None
 
     except Exception as e:
@@ -81,14 +81,14 @@ def main():
     stake, top_stake = get_stake_and_top_stake()
     if stake is not None and top_stake is not None:
         multiplier = calculate_multiplier(stake, top_stake)
-        print(f"Stake: {stake:.12f} ORE")
+        print(f"Stake: {stake:.12f} COAL")
         print(f"Your Current Multiplier: {multiplier:.8f}")
         
         print("\nMultiplier Preview for Different Stakes:")
         preview_results = preview_multipliers(stake, top_stake)
         
         for increment, multiplier in preview_results:
-            print(f"Stake: {stake + increment:.12f} ORE | Multiplier: {multiplier:.8f}")
+            print(f"Stake: {stake + increment:.12f} COAL | Multiplier: {multiplier:.8f}")
     else:
         print("Error: Could not calculate multiplier due to missing stake or top stake.")
 

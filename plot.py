@@ -14,7 +14,7 @@ def get_hashpower():
     Prompts the user to enter their hashpower per second (Hs) and calculates hashpower per minute (Hm).
     """
     try:
-        print(f"{Fore.CYAN}Enter your hashpower per second (Hs):{Style.RESET_ALL}", end=" ")
+        print(f"{Fore.MAGENTA}Enter your hashpower per second (Hs):{Style.RESET_ALL}", end=" ")
         Hs = float(input())
         Hm = Hs * 60
         return Hm
@@ -44,10 +44,10 @@ def calculate_probabilities(Hm, d1, decay_rate):
 
 def fetch_difficulty_range():
     """
-    Fetches the difficulty range from the 'ore rewards' command.
+    Fetches the difficulty range from the 'coal rewards' command.
     """
     try:
-        command_output = subprocess.check_output(['ore', 'rewards'], text=True)
+        command_output = subprocess.check_output(['coal', 'rewards'], text=True)
         difficulty_levels = re.findall(r'^(\d+):', command_output, re.MULTILINE)
         difficulty_levels = list(map(int, difficulty_levels))
 
@@ -56,7 +56,7 @@ def fetch_difficulty_range():
         else:
             return 1, 50  # Default to full range if no levels found
     except subprocess.CalledProcessError as e:
-        print("Error running 'ore rewards' command:", e)
+        print("Error running 'coal rewards' command:", e)
         return 1, 50  # Default to full range if command fails
 
 def filter_difficulties(d1, p_d, range_start, range_end):
@@ -86,7 +86,7 @@ def select_scenario():
     """
     Prompts the user to select a scenario and returns the corresponding decay rate.
     """
-    print(f"\n{Fore.CYAN}--- Understanding Decay Rate ---{Style.RESET_ALL}")
+    print(f"\n{Fore.MAGENTA}--- Understanding Decay Rate ---{Style.RESET_ALL}")
     print("The decay rate controls how quickly the probability of solving higher difficulties decreases.")
     print("A higher decay rate means that as difficulty increases, the likelihood of solving those higher difficulties drops off more sharply.")
     print(f"Conversely, a lower decay rate means higher difficulties are more likely to be solved.{Style.RESET_ALL}\n")

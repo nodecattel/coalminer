@@ -13,7 +13,7 @@ To get started with the Ore Miner Auto Script, clone this repository to your loc
 
 ```bash
 git clone https://github.com/nodecattel/coalminer.git
-cd oreminer
+cd coalminer
 ```
 
 ### Prerequisites ✅
@@ -79,7 +79,6 @@ Upgrade COAL-CLI version
 ### COALCULATOR Setup & Usage 🧮
 Here’s a snapshot of the COALCULATOR in action:
 
-![ORECULATOR Snapshot]
 To install the required packages for cal.py:
 
 ```bash

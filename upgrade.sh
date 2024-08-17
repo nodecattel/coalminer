@@ -1,37 +1,38 @@
 #!/bin/bash
 
-echo -e "\033[0;32m"
+echo -e "\033[0;35m"
 cat << "EOF"
-█▀█ █▀█ █▀▀ █▀▄▀█ █ █▄░█ █▀▀ █▀█
-█▄█ █▀▄ ██▄ █░▀░█ █ █░▀█ ██▄ █▀▄ ORE V2 - Upgrade
+         )        (      *    (       )     (     
+   (  ( /(  (     )\ ) (  `   )\ ) ( /(     )\ )  
+   )\ )\()) )\   (()/( )\))( (()/( )\())(  (()/(  
+ (((_((_)((((_)(  /(_)((_)()\ /(_)((_)\ )\  /(_)) 
+ )\___ ((_)\ _ )\(_)) (_()((_(_))  _((_((_)(_))   
+((/ __/ _ (_)_\(_| |  |  \/  |_ _|| \| | __| _ \  
+ | (_| (_) / _ \ | |__| |\/| || | | .` | _||   /  
+  \___\___/_/ \_\|____|_|  |_|___||_|\_|___|_|_\  COAL-CLI V2 - Upgrade script
+                                                 
 EOF
-echo -e "Upgrading ORE CLI\033[0m"
+echo -e "Upgrading COAL CLI\033[0m"
 
 # Exit script if any command fails
 set -e
 
-# Prompt to select environment (mainnet, jito, or panda-optimized-cores)
-echo -e "\033[0;32m"
-read -p "Choose Solana network (m for mainnet, j for jito dynamic tip, p for panda-opti-cores): " env_choice
+# Prompt to select environment (mainnet or panda-optimized-cores)
+echo -e "\033[0;35m"
+read -p "Choose Solana network (m for mainnet, p for panda-opti-cores): " env_choice
 echo -e "\033[0m"  # Reset color
 case "$env_choice" in
     [Mm]*)
         echo "Switching to 'mainnet'..."
         solana config set --url https://api.mainnet-beta.solana.com
-        REPO_URL="https://github.com/regolith-labs/ore-cli"
-        ORE_CLI_DIR="$HOME/oreminer/ore-cli"
-        ;;
-    [Jj]*)
-        echo "Switching to 'jito dynamic tip'..."
-        solana config set --url https://api.mainnet-beta.solana.com
-        REPO_URL="https://github.com/nodecattel/ore-cli-jito.git"
-        ORE_CLI_DIR="$HOME/oreminer/ore-cli-jito"
+        REPO_URL="https://github.com/coal-digital/coal-cli"
+        COAL_CLI_DIR="$HOME/coalminer/coal-cli"
         ;;
     [Pp]*)
         echo "Switching to 'panda-opti-cores'..."
         solana config set --url https://api.mainnet-beta.solana.com
-        REPO_URL="https://github.com/JustPandaEver/ore-cli.git"
-        ORE_CLI_DIR="$HOME/oreminer/ore-cli-panda"
+        REPO_URL="https://github.com/JustPandaEver/coal-cli.git"
+        COAL_CLI_DIR="$HOME/coalminer/coal-cli-panda"
         ;;
     *)
         echo "Invalid choice. Staying on current environment."
@@ -42,10 +43,10 @@ esac
 # Determine the default branch name
 DEFAULT_BRANCH=$(git ls-remote --symref "$REPO_URL" HEAD | awk '/^ref:/ {print $2}' | sed 's/refs\/heads\///')
 
-# Clone or update ORE-CLI from source
-if [ -d "$ORE_CLI_DIR" ]; then
-    echo "Updating ORE-CLI repository..."
-    cd $ORE_CLI_DIR
+# Clone or update COAL-CLI from source
+if [ -d "$COAL_CLI_DIR" ]; then
+    echo "Updating COAL-CLI repository..."
+    cd $COAL_CLI_DIR
     git remote set-url origin "$REPO_URL"
     git fetch origin
     
@@ -81,57 +82,57 @@ if [ -d "$ORE_CLI_DIR" ]; then
         fi
     fi
 else
-    echo "Cloning ORE-CLI repository..."
-    mkdir -p $(dirname $ORE_CLI_DIR)
-    git clone --branch $DEFAULT_BRANCH "$REPO_URL" $ORE_CLI_DIR
-    cd $ORE_CLI_DIR
+    echo "Cloning COAL-CLI repository..."
+    mkdir -p $(dirname $COAL_CLI_DIR)
+    git clone --branch $DEFAULT_BRANCH "$REPO_URL" $COAL_CLI_DIR
+    cd $COAL_CLI_DIR
 fi
 
 # Additional steps for mainnet
 if [[ "$env_choice" =~ [Mm] ]]; then
     echo "Setting up additional repository for mainnet..."
-    cd $HOME/oreminer
-    if [ -d "$HOME/oreminer/ore" ]; then
-        cd ore
-        git remote set-url origin https://github.com/regolith-labs/ore
+    cd $HOME/coalminer
+    if [ -d "$HOME/coalminer/coal" ]; then
+        cd coal
+        git remote set-url origin https://github.com/coal-digital/coal
         git fetch origin
         git checkout master
     else
-        git clone https://github.com/regolith-labs/ore.git
-        cd ore
+        git clone https://github.com/coal-digital/coal
+        cd coal
         git checkout master
     fi
-    cd $ORE_CLI_DIR
+    cd $COAL_CLI_DIR
 fi
 
-# Build the ORE-CLI binary
-echo "Building ORE-CLI..."
+# Build the COAL-CLI binary
+echo "Building COAL-CLI..."
 cargo build --release
 
 # Move the binary to the appropriate location
-cp target/release/ore $HOME/.cargo/bin/ore
-echo "Ore CLI has been installed from source and updated to the latest version."
+cp target/release/coal $HOME/.cargo/bin/coal
+echo "Coal CLI has been installed from source and updated to the latest version."
 
-# Print the current installed version of Ore CLI
-echo "The current installed version of Ore CLI is:"
-ore --version
+# Print the current installed version of Coal CLI
+echo "The current installed version of Coal CLI is:"
+coal --version
 echo -e "\033[0;35m by NodeCattel\033[0m"
 
-# Give execution permission to ore.sh
-ORE_SH_PATH="$HOME/oreminer/ore.sh" # Update with the actual path
-if [ -f "$ORE_SH_PATH" ]; then
-    chmod +x "$ORE_SH_PATH"
-    echo "Executable permissions set for ore.sh."
+# Give execution permission to coal.sh
+COAL_SH_PATH="$HOME/coalminer/coal.sh" # Update with the actual path
+if [ -f "$COAL_SH_PATH" ]; then
+    chmod +x "$COAL_SH_PATH"
+    echo "Executable permissions set for coal.sh."
 else
-    echo "ore.sh does not exist at $ORE_SH_PATH. Please make sure it's in the correct location."
+    echo "coal.sh does not exist at $COAL_SH_PATH. Please make sure it's in the correct location."
 fi
 
-# Optionally prompt the user to run ore.sh for further setup
+# Optionally prompt the user to run coal.sh for further setup
 read -p "Do you wish to start mining? [Y/n] " answer
 if [[ "$answer" =~ ^[Yy]$ ]]; then
-    echo "Starting mining with the latest ore-cli"
-    cd $(dirname "$ORE_SH_PATH") # Change directory to where ore.sh is located
-    ./ore.sh mine
+    echo "Starting mining with the latest coal-cli"
+    cd $(dirname "$COAL_SH_PATH") # Change directory to where coal.sh is located
+    ./coal.sh mine
 else
-    echo -e "Upgrade complete. You can start mining manually by running ./ore.sh mine."
+    echo -e "Upgrade complete. You can start mining manually by running ./coal.sh mine."
 fi
